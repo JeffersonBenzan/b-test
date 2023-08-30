@@ -1,22 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import "react-image-gallery/styles/css/image-gallery.css";
+import { SearchComponent } from './components/Search';
+import { GridGif } from './components/GridGif';
+import { useEffect, useState } from 'react';
+// import { useFetch } from './hooks/useFetch';
+import { getGitf } from './helpers/getGif';
+import { useFetch } from './hooks/useFetch';
 
 function App() {
+  const [search, setSearch] = useState('')
+  const { data } = useFetch(search);
+
+  const habdleSearch = (value) => {
+    setSearch(value);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <SearchComponent onSearch={habdleSearch} />
+        <GridGif gifts={data} category={search} />
       </header>
     </div>
   );
